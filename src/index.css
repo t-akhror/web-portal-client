@@ -18,6 +18,12 @@ code {
   text-align: left;
   margin-top: 0.25rem;
 }
+.error-msg-box{
+  color: #fc8181;
+  border:2px solid#fc8181;
+  text-align: center;
+  margin-top: 0.25rem;
+}
 button {
   display: block;
   margin: 1rem 0;

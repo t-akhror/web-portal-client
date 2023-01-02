@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { basicSchema } from "../schemas";
 
@@ -15,18 +15,34 @@ import Facebook from "../../images/facebook.png";
 import { useSignup } from "../../hooks/useSignup";
 
 function Signup() {
-  const [email, setEmail] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [password, setPassword] = useState("");
   const { signup, isLoading, error } = useSignup();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(email, firstname, lastname, dateOfBirth, password);
-    await signup(email, firstname, lastname, dateOfBirth, password);
+  const onSubmit = async (values, actions) => {
+    console.log(values);
+    console.log(actions);
+    await signup(
+      values.email,
+      values.firstname,
+      values.lastname,
+      values.dateOfBirth,
+      values.password
+    );
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    actions.resetForm();
   };
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        email: "",
+        firstname: "",
+        lastname: "",
+        dateOfBirth: "",
+        password: "",
+        confirmPassword: "",
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
 
   return (
     <Container fluid="md">
@@ -44,11 +60,16 @@ function Signup() {
               className="mb-3"
             >
               <Form.Control
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={values.email}
+                onChange={handleChange}
                 type="email"
                 placeholder="Enter your email"
+                onBlur={handleBlur}
+                className={errors.email && touched.email ? "input-error" : ""}
               />
+              {errors.email && touched.email && (
+                <p className="error">{errors.email}</p>
+              )}
             </FloatingLabel>
 
             <FloatingLabel
@@ -57,11 +78,18 @@ function Signup() {
               className="mb-3"
             >
               <Form.Control
-                value={firstname}
-                onChange={(e) => setFirstname(e.target.value)}
+                value={values.firstname}
+                onChange={handleChange}
                 type="text"
                 placeholder="Enter your Fistname"
+                onBlur={handleBlur}
+                className={
+                  errors.firstname && touched.firstname ? "input-error" : ""
+                }
               />
+              {errors.firstname && touched.firstname && (
+                <p className="error">{errors.firstname}</p>
+              )}
             </FloatingLabel>
 
             <FloatingLabel
@@ -70,11 +98,18 @@ function Signup() {
               className="mb-3"
             >
               <Form.Control
-                value={lastname}
-                onChange={(e) => setLastname(e.target.value)}
+                value={values.lastname}
+                onChange={handleChange}
                 type="text"
                 placeholder="Enter your lastname"
+                onBlur={handleBlur}
+                className={
+                  errors.lastname && touched.lastname ? "input-error" : ""
+                }
               />
+              {errors.lastname && touched.lastname && (
+                <p className="error">{errors.lastname}</p>
+              )}
             </FloatingLabel>
 
             <FloatingLabel
@@ -83,11 +118,18 @@ function Signup() {
               className="mb-3"
             >
               <Form.Control
-                value={dateOfBirth}
-                onChange={(e) => setDateOfBirth(e.target.value)}
+                value={values.dateOfBirth}
+                onChange={handleChange}
                 type="date"
                 placeholder="Date of birth"
+                onBlur={handleBlur}
+                className={
+                  errors.dateOfBirth && touched.dateOfBirth ? "input-error" : ""
+                }
               />
+              {errors.dateOfBirth && touched.dateOfBirth && (
+                <p className="error">{errors.dateOfBirth}</p>
+              )}
             </FloatingLabel>
 
             <FloatingLabel
@@ -96,11 +138,40 @@ function Signup() {
               className="mb-3"
             >
               <Form.Control
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={values.password}
+                onChange={handleChange}
                 type="password"
+                onBlur={handleBlur}
                 autoComplete="new-password"
+                className={
+                  errors.password && touched.password ? "input-error" : ""
+                }
               />
+              {errors.password && touched.password && (
+                <p className="error">{errors.password}</p>
+              )}
+            </FloatingLabel>
+
+            <FloatingLabel
+              controlId="confirmPassword"
+              label="ConfirmPassword"
+              className="mb-3"
+            >
+              <Form.Control
+                value={values.confirmPassword}
+                onChange={handleChange}
+                type="password"
+                onBlur={handleBlur}
+                autoComplete="new-password"
+                className={
+                  errors.confirmPassword && touched.confirmPassword
+                    ? "input-error"
+                    : ""
+                }
+              />
+              {errors.confirmPassword && touched.confirmPassword && (
+                <p className="error">{errors.confirmPassword}</p>
+              )}
             </FloatingLabel>
             <Button variant="primary" type="submit" disabled={isLoading}>
               {" "}
