@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useFormik } from "formik";
-import { basicSchema } from "../schemas";
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";

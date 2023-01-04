@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link } from "react-router-dom";
@@ -14,12 +14,15 @@ const Header = () => {
   const handleLogout = () => {
     logout();
   };
+
+  console.log("user elements", user);
   return (
     <Navbar
       collapseOnSelect
       expand="lg"
       variant="light"
       className="shadow-sm p-3 mb-5 bg-body rounded"
+      sticky="top"
     >
       <Container>
         <Navbar.Brand as={Link} to="/">
@@ -28,8 +31,15 @@ const Header = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-lg-3">
-            <Nav.Link href="#features">Reviews</Nav.Link>
-            <Nav.Link href="#pricing">My Reviews</Nav.Link>
+            <Nav.Link as={Link} to="/main">
+              Reviews
+            </Nav.Link>
+            <Nav.Link as={Link} to="/myreviews">
+              My Reviews
+            </Nav.Link>
+            <Nav.Link as={Link} to="/newreview">
+              New Reviews
+            </Nav.Link>
           </Nav>
           <Nav className="mx-auto">
             <Form className="d-flex">
@@ -43,12 +53,16 @@ const Header = () => {
             </Form>
           </Nav>
           {user && (
-            <Nav>
-              <span> {user.email}</span>
-              <Button variant="success" onClick={handleLogout}>
-                Logout
-              </Button>
-            </Nav>
+            <>
+              <Nav>
+                <span className="me-2"> {user.email}</span>
+              </Nav>
+              <Nav>
+                <Button variant="success" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </Nav>
+            </>
           )}
           {!user && (
             <Nav>
