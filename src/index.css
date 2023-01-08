@@ -3,6 +3,7 @@
 :root {
   --primary: #1aac83;
   --error: #e7195a;
+
 }
 body {
   background: #f1f1f1;
@@ -14,6 +15,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 .error {
   color: #fc8181;
   font-size: 0.75rem;
@@ -34,7 +36,6 @@ button {
   color: #1a202c;
   border: none;
   border-radius: 3px;
-  width: 100%;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -51,6 +52,7 @@ button:disabled {
 
 .bg-white{
   background-color: #fff;
+  
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .res-table{
@@ -58,4 +60,13 @@ button:disabled {
 }
 .sr-only{
   display: none!important;
+}
+.table{
+  display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.table tbody thead {
+  display: table;
+  width: 100%;
 }

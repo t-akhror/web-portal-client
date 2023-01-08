@@ -6,28 +6,26 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 
 function Main() {
   const { reviews, dispatch } = useReviewContext();
-  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchReview = async () => {
-      const response = await fetch("/api/reviews", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+      const response = await fetch("/api/reviews/allreviews", {
+        // headers: {
+        //   Authorization: `Bearer ${user.token}`,
+        // },
       });
       const json = await response.json();
       console.log(json);
       if (response.ok) {
-        dispatch({ type: "SET_REVIEW", payload: json });
+        dispatch({ type: "SETALL_REVIEW", payload: json });
       }
     };
-    if (user) {
-      fetchReview();
-    }
-  }, [dispatch, user]);
+
+    fetchReview();
+  }, [dispatch]);
 
   return (
-    <Container className="bg-white p-3">
+    <Container className="p-3">
       {reviews &&
         reviews.map((review) => <Reviews review={review} key={review._id} />)}
     </Container>

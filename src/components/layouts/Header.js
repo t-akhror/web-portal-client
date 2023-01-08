@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-
+import { MoonFill } from "react-bootstrap-icons";
 const Header = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
@@ -15,13 +15,31 @@ const Header = () => {
     logout();
   };
 
-  console.log("user elements", user);
+  // theme function
+
+  const getTheme = () => {
+    return JSON.parse(localStorage.getItem("theme")) || "light";
+  };
+  const [theme, setTheme] = useState(getTheme());
+
+  useEffect(() => {
+    localStorage.setItem("theme", JSON.stringify(theme));
+    document.documentElement.setAttribute("data-bs-theme", theme);
+  }, [theme]);
+  const changeTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+
   return (
     <Navbar
       collapseOnSelect
       expand="lg"
       variant="light"
-      className="shadow-sm p-3 mb-5 bg-body rounded"
+      className="shadow-sm p-3 mb-4 bg-body rounded"
       sticky="top"
     >
       <Container>
@@ -31,15 +49,21 @@ const Header = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-lg-3">
-            <Nav.Link as={Link} to="/main">
+            <Nav.Link as={Link} to="/allreviews">
               Reviews
             </Nav.Link>
-            <Nav.Link as={Link} to="/myreviews">
-              My Reviews
-            </Nav.Link>
-            <Nav.Link as={Link} to="/newreview">
-              New Reviews
-            </Nav.Link>
+            {user ? (
+              <>
+                <Nav.Link as={Link} to="/myreviews">
+                  My Reviews
+                </Nav.Link>
+                <Nav.Link as={Link} to="/newreview">
+                  New Reviews
+                </Nav.Link>
+              </>
+            ) : (
+              ""
+            )}
           </Nav>
           <Nav className="mx-auto">
             <Form className="d-flex">
@@ -75,6 +99,14 @@ const Header = () => {
             </Nav>
           )}
         </Navbar.Collapse>
+        <Form className="ms-2">
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label={theme === "light" ? "Dark" : "Light"}
+            onChange={() => changeTheme()}
+          />
+        </Form>
       </Container>
     </Navbar>
   );

@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { format } from "date-fns";
 import BootstrapTable from "react-bootstrap-table-next";
 import Container from "react-bootstrap/esm/Container";
-// import Table from "react-bootstrap/Table";
+
 import { useReviewContext } from "../../hooks/useReviewsContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import filterFactory, {
-  textFilter,
-  dateFilter,
-} from "react-bootstrap-table2-filter";
+import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css";
 // import { Eye, Pencil, Trash3 } from "react-bootstrap-icons";
 
@@ -21,6 +19,11 @@ function MyReviews() {
   // SLICE description function
   function descrFormatter(cell, row) {
     return cell.slice(0, 30);
+  }
+  // REFORMAT created Date
+  function dateFormatter(cell, row) {
+    const date = new Date(cell);
+    return format(date, "P. k:m");
   }
 
   const columns = [
@@ -35,6 +38,9 @@ function MyReviews() {
       text: "Category",
       sort: true,
       filter: textFilter(),
+      style: {
+        width: "40px",
+      },
     },
     {
       dataField: "description",
@@ -57,8 +63,7 @@ function MyReviews() {
       dataField: "createdAt",
       text: "Created at",
       sort: true,
-      formatter: (cell) => cell.toString(),
-      filter: dateFilter(),
+      formatter: dateFormatter,
     },
   ];
 
@@ -100,59 +105,20 @@ function MyReviews() {
   }, [dispatch, user]);
 
   return (
-    <Container className="bg-white p-3">
+    <Container className=" p-3">
       <div className="fs-3 mb-3 text-center ">My reviews</div>
 
-      <BootstrapTable
-        bootstrap4
-        keyField="_id"
-        columns={columns}
-        data={reviews}
-        pagination={pagination}
-        filter={filterFactory()}
-        filterPosition="inline"
-      />
-
-      {/* <div className="res-table">
-        <Table variant="bg-white" className="">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th> Brand</th>
-              <th>Image</th>
-              <th>Category</th>
-              <th>Description</th>
-              <th>Rate</th>
-              <th>Comments</th>
-
-              <th>Created at</th>
-              <th> Actions </th>
-            </tr>
-          </thead>
-          <tbody>
-            {reviews &&
-              reviews.map((review, index) => (
-                <tr key={review._id}>
-                  <td>{index + 1}</td>
-                  <td>{review.title}</td>
-                  <td>{review.brand}</td>
-                  <td>{review.image}</td>
-                  <td>{review.category}</td>
-                  <td>{review.description.slice(0, 50)}</td>
-                  <td>{review.rating}</td>
-                  <td>{review.numReviews}</td>
-                  <td>{review.createdAt}</td>
-                  <td>
-                    <Eye className="text-info" />
-                    <Pencil className="text-warning" />{" "}
-                    <Trash3 className="text-danger" />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-      </div> */}
+      {reviews && (
+        <BootstrapTable
+          bootstrap4
+          keyField="_id"
+          columns={columns}
+          data={reviews}
+          pagination={pagination}
+          filter={filterFactory()}
+          filterPosition="inline"
+        />
+      )}
     </Container>
   );
 }

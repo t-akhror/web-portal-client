@@ -15,18 +15,18 @@ function Reviews({ review }) {
     setRating(nextValue);
   };
 
-  const handleDelete = async () => {
-    const response = await fetch("/api/reviews/" + review._id, {
-      method: "DELETE",
-    });
-    const json = await response.json();
+  // const handleDelete = async () => {
+  //   const response = await fetch("/api/reviews/" + review._id, {
+  //     method: "DELETE",
+  //   });
+  //   const json = await response.json();
 
-    if (response.ok) {
-      dispatch({ type: "DELETE_REVIEW", payload: json });
-    }
-  };
+  //   if (response.ok) {
+  //     dispatch({ type: "DELETE_REVIEW", payload: json });
+  //   }
+  // };
   return (
-    <Card className="my-3">
+    <Card className="my-3 shadow-sm p-3 bg-body rounded border-1 ">
       <Row>
         <Col md={4} className="">
           <Card.Img variant="top" src="" />
@@ -43,7 +43,7 @@ function Reviews({ review }) {
               </small>
             </Card.Title>
             <Card.Text>{review.description.slice(0, 250)}</Card.Text>
-            <Card.Link href="#" className="stretched-link">
+            <Card.Link href="#" className="">
               Read more
             </Card.Link>
             <div className="d-flex justify-content-between align-item-center">

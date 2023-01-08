@@ -7,7 +7,7 @@ import Main from "../layouts/Main";
 
 export default function Home() {
   return (
-    <Container className="bg-white">
+    <Container className="">
       <Row>
         <Col md={3} className="mt-3">
           <Categories />

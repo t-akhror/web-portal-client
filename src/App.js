@@ -17,10 +17,8 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={user ? <Welcome /> : <Navigate to="/login" />}
-        />
+        <Route path="/" element={<Welcome />} />
+        <Route path="/allreviews" element={<Home />} />
         <Route
           path="/login"
           element={!user ? <Login /> : <Navigate to="/" />}
@@ -30,17 +28,14 @@ function App() {
           element={!user ? <Signup /> : <Navigate to="/" />}
         />
         <Route
-          path="/main"
+          path="/allreviews"
           element={user ? <Home /> : <Navigate to="/login" />}
         />
-        {user ? (
-          <>
-            <Route path="/myreviews" element={<MyReviews />} />
-            <Route path="/newreview" element={<ReviewForm />} />{" "}
-          </>
-        ) : (
-          ""
-        )}
+        <Route path="/myreviews" element={user ? <MyReviews /> : <Welcome />} />
+        <Route
+          path="/newreview"
+          element={user ? <ReviewForm /> : <Welcome />}
+        />
       </Routes>
     </BrowserRouter>
   );
