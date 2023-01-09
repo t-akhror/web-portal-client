@@ -50,7 +50,7 @@ function ReviewForm() {
   };
 
   return (
-    <Container className="p-3">
+    <Container className="p-3 bg-dark-subtle">
       <div className="fs-3 text-center mb-3 ">Create a new review</div>
       <Form onSubmit={handleSubmit}>
         <Row>

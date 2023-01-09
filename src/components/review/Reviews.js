@@ -26,7 +26,7 @@ function Reviews({ review }) {
   //   }
   // };
   return (
-    <Card className="my-3 shadow-sm p-3 bg-body rounded border-1 ">
+    <Card className="my-3 shadow-sm p-3 bg-body rounded border-1 bg-dark-subtle">
       <Row>
         <Col md={4} className="">
           <Card.Img variant="top" src="" />

@@ -105,7 +105,7 @@ function MyReviews() {
   }, [dispatch, user]);
 
   return (
-    <Container className=" p-3">
+    <Container className=" p-3 bg-dark-subtle">
       <div className="fs-3 mb-3 text-center ">My reviews</div>
 
       {reviews && (

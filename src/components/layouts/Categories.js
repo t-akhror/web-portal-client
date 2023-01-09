@@ -4,7 +4,7 @@ import { Book, Film, Controller, CameraReels } from "react-bootstrap-icons";
 
 export default function Categories() {
   return (
-    <ListGroup variant="flush">
+    <ListGroup variant="flush" className="bg-dark-subtle">
       <div className=" fs-4">Categories</div>
       <ListGroup.Item>
         {" "}
