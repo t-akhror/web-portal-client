@@ -10,7 +10,7 @@ function Main() {
 
   useEffect(() => {
     const fetchReview = async () => {
-      const response = await axios(
+      const response = await fetch(
         "https://reviews-3hiw.onrender.com/api/reviews/allreviews",
         {
           // headers: {
