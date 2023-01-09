@@ -10,14 +10,11 @@ function Main() {
   console.log("mana", SERVER_URL);
   useEffect(() => {
     const fetchReview = async () => {
-      const response = await fetch(
-        "https://reviews-3hiw.onrender.com/api/reviews/allreviews",
-        {
-          // headers: {
-          //   Authorization: `Bearer ${user.token}`,
-          // },
-        }
-      );
+      const response = await fetch(SERVER_URL + "/api/reviews/allreviews", {
+        // headers: {
+        //   Authorization: `Bearer ${user.token}`,
+        // },
+      });
       const json = await response.json();
       console.log(json);
       if (response.ok) {
