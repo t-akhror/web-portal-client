@@ -7,7 +7,7 @@ import axios from "axios";
 
 function Main() {
   const { reviews, dispatch } = useReviewContext();
-
+  console.log("mana", SERVER_URL);
   useEffect(() => {
     const fetchReview = async () => {
       const response = await fetch(
