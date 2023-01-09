@@ -10,7 +10,7 @@ export const reviewsReducer = (state, action) => {
       };
     case "MY_REVIEW":
       return {
-        reviews: action.payload,
+        myReviews: action.payload,
       };
     case "CREATE_REVIEW":
       return {
