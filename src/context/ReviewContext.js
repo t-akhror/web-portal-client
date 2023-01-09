@@ -8,7 +8,7 @@ export const reviewsReducer = (state, action) => {
       return {
         reviews: action.payload,
       };
-    case "SETALL_REVIEW":
+    case "MY_REVIEW":
       return {
         reviews: action.payload,
       };
@@ -28,7 +28,7 @@ export const reviewsReducer = (state, action) => {
 export const ReviewsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reviewsReducer, {
     reviews: null,
-    theme: "light",
+    myReviews: null,
   });
 
   return (

@@ -10,10 +10,11 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css";
+import { SERVER_KEY } from "../../api/api";
 // import { Eye, Pencil, Trash3 } from "react-bootstrap-icons";
 
 function MyReviews() {
-  const { reviews, dispatch } = useReviewContext();
+  const { myReviews, dispatch } = useReviewContext();
   const { user } = useAuthContext();
 
   // SLICE description function
@@ -88,7 +89,7 @@ function MyReviews() {
 
   useEffect(() => {
     const fetchReview = async () => {
-      const response = await fetch("/api/reviews", {
+      const response = await fetch(SERVER_KEY + "/api/reviews", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -96,7 +97,7 @@ function MyReviews() {
       const json = await response.json();
       console.log(json);
       if (response.ok) {
-        dispatch({ type: "SET_REVIEW", payload: json });
+        dispatch({ type: "MY_REVIEW", payload: json });
       }
     };
     if (user) {
@@ -108,12 +109,12 @@ function MyReviews() {
     <Container className=" p-3 bg-dark-subtle">
       <div className="fs-3 mb-3 text-center ">My reviews</div>
 
-      {reviews && (
+      {myReviews && (
         <BootstrapTable
           bootstrap4
           keyField="_id"
           columns={columns}
-          data={reviews}
+          data={myReviews}
           pagination={pagination}
           filter={filterFactory()}
           filterPosition="inline"
