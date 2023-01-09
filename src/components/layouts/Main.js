@@ -3,17 +3,21 @@ import Container from "react-bootstrap/esm/Container";
 import Reviews from "../review/Reviews";
 import { useReviewContext } from "../../hooks/useReviewsContext";
 import { SERVER_URL } from "../../api/api";
+import axios from "axios";
 
 function Main() {
   const { reviews, dispatch } = useReviewContext();
 
   useEffect(() => {
     const fetchReview = async () => {
-      const response = await fetch("/api/reviews/allreviews", {
-        // headers: {
-        //   Authorization: `Bearer ${user.token}`,
-        // },
-      });
+      const response = await axios(
+        "https://reviews-3hiw.onrender.com/api/reviews/allreviews",
+        {
+          // headers: {
+          //   Authorization: `Bearer ${user.token}`,
+          // },
+        }
+      );
       const json = await response.json();
       console.log(json);
       if (response.ok) {
