@@ -9,7 +9,7 @@ function Main() {
 
   useEffect(() => {
     const fetchReview = async () => {
-      const response = await fetch(SERVER_URL + "/api/reviews/allreviews", {
+      const response = await fetch("/api/reviews/allreviews", {
         // headers: {
         //   Authorization: `Bearer ${user.token}`,
         // },
