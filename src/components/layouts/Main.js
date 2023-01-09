@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Reviews from "../review/Reviews";
 import { useReviewContext } from "../../hooks/useReviewsContext";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { SERVER_URL } from "../../api/api";
 
 function Main() {
   const { reviews, dispatch } = useReviewContext();
 
   useEffect(() => {
     const fetchReview = async () => {
-      const response = await fetch("/api/reviews/allreviews", {
+      const response = await fetch(SERVER_URL + "/api/reviews/allreviews", {
         // headers: {
         //   Authorization: `Bearer ${user.token}`,
         // },

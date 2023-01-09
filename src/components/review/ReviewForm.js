@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { useReviewContext } from "../../hooks/useReviewsContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { SERVER_URL } from "../../api/api";
 
 function ReviewForm() {
   const [title, setTitle] = useState("");
@@ -25,7 +26,7 @@ function ReviewForm() {
       setError("You must be logged in ");
       return;
     }
-    const response = await fetch("/api/reviews", {
+    const response = await fetch(SERVER_URL + "/api/reviews", {
       method: "POST",
       body: JSON.stringify(review),
       headers: {
