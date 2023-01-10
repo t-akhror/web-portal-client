@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
-import { SERVER_URL } from "../api/api";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -11,14 +10,17 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(SERVER_URL + "/api/users/login ", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+    const response = await fetch(
+      "https://reviews-3hiw.onrender.com/api/users/login ",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    );
     const json = await response.json();
 
     if (!response.ok) {
