@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import BootstrapTable from "react-bootstrap-table-next";
 import Container from "react-bootstrap/esm/Container";
 
+import { useTranslation } from "react-i18next";
 import { useReviewContext } from "../../hooks/useReviewsContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
@@ -10,12 +11,11 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css";
-import { SERVER_KEY } from "../../api/api";
-// import { Eye, Pencil, Trash3 } from "react-bootstrap-icons";
 
 function MyReviews() {
   const { myReviews, dispatch } = useReviewContext();
   const { user } = useAuthContext();
+  const { t } = useTranslation();
 
   // SLICE description function
   function descrFormatter(cell, row) {
@@ -30,13 +30,13 @@ function MyReviews() {
   const columns = [
     {
       dataField: "title",
-      text: "Title",
+      text: t("title"),
       sort: true,
       filter: textFilter(),
     },
     {
       dataField: "category",
-      text: "Category",
+      text: t("category"),
       sort: true,
       filter: textFilter(),
       style: {
@@ -45,24 +45,24 @@ function MyReviews() {
     },
     {
       dataField: "description",
-      text: "Description",
+      text: t("description"),
       formatter: descrFormatter,
     },
     {
       dataField: "rating",
-      text: "Rate",
+      text: t("rate"),
       sort: true,
       filter: textFilter(),
     },
     {
       dataField: "numReviews",
-      text: "Comments",
+      text: t("comments"),
       sort: true,
       filter: textFilter(),
     },
     {
       dataField: "createdAt",
-      text: "Created at",
+      text: t("createdAt"),
       sort: true,
       formatter: dateFormatter,
     },
@@ -98,7 +98,7 @@ function MyReviews() {
         }
       );
       const json = await response.json();
-      console.log(json);
+      // console.log(json);
       if (response.ok) {
         dispatch({ type: "MY_REVIEW", payload: json });
       }
@@ -109,20 +109,23 @@ function MyReviews() {
   }, [dispatch, user]);
 
   return (
-    <Container className=" p-3 bg-dark-subtle">
-      <div className="fs-3 mb-3 text-center ">My reviews</div>
-
-      {myReviews && (
-        <BootstrapTable
-          bootstrap4
-          keyField="_id"
-          columns={columns}
-          data={myReviews}
-          pagination={pagination}
-          filter={filterFactory()}
-          filterPosition="inline"
-        />
-      )}
+    <Container className="p-3 ">
+      <div className="fs-1 my-4 text-center text-primary-emphasis ">
+        {t("myReviews")}
+      </div>
+      <div className="my-3 shadow p-3 bg-body shadow-sm-color rounded border border-primary-subtle bg-light-subtle">
+        {myReviews && (
+          <BootstrapTable
+            bootstrap4
+            keyField="_id"
+            columns={columns}
+            data={myReviews}
+            pagination={pagination}
+            filter={filterFactory()}
+            filterPosition="inline"
+          />
+        )}
+      </div>
     </Container>
   );
 }

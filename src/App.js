@@ -6,18 +6,19 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import Header from "./components/layouts/Header";
-import Welcome from "./components/pages/Welcome";
 import MyReviews from "./components/review/MyReviews";
 import Home from "./components/pages/Home";
 import ReviewForm from "./components/review/ReviewForm";
+import NotFound from "./components/pages/NotFound";
 
 function App() {
   const { user } = useAuthContext();
+
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Welcome />} />
+        <Route path="/" element={<Home />} />
         <Route path="/allreviews" element={<Home />} />
         <Route
           path="/login"
@@ -28,14 +29,14 @@ function App() {
           element={!user ? <Signup /> : <Navigate to="/" />}
         />
         <Route
-          path="/allreviews"
-          element={user ? <Home /> : <Navigate to="/login" />}
+          path="/myreviews"
+          element={user ? <MyReviews /> : <Navigate to="/" />}
         />
-        <Route path="/myreviews" element={user ? <MyReviews /> : <Welcome />} />
         <Route
           path="/newreview"
-          element={user ? <ReviewForm /> : <Welcome />}
+          element={user ? <ReviewForm /> : <Navigate to="/" />}
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

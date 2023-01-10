@@ -5,15 +5,16 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import { useTranslation } from "react-i18next";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, isLoading, error } = useLogin();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await login(email, password);
   };
   return (
@@ -22,11 +23,11 @@ function Login() {
         <Col
           md={6}
           lg={4}
-          className="shadow p-3 mb-5 bg-body rounded mt-5 mx-2 bg-white"
+          className="shadow p-3 mb-5 bg-body rounded mt-5 mx-2 border border-primary-subtle"
         >
           <Form className="p-3" onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label> Email </Form.Label>
+              <Form.Label> {t("email")} </Form.Label>
               <Form.Control
                 type="email"
                 placeholder="example@mail.com"
@@ -35,11 +36,11 @@ function Login() {
               />
               <Form.Text className="tex-muted">
                 {" "}
-                We'll never share your email with anyone else
+                {t("weWillNeverShareYourEmailWithAnyone")}
               </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label> Password </Form.Label>
+              <Form.Label> {t("password")} </Form.Label>
               <Form.Control
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
@@ -47,11 +48,10 @@ function Login() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicRadio">
-              <Form.Check type="checkbox" label="Remember me" />
+              <Form.Check type="checkbox" label={t("rememberMe")} />
             </Form.Group>
             <Button variant="primary" type="submit" disabled={isLoading}>
-              {" "}
-              Log in
+              {t("logIn")}
             </Button>
             {error && <div className="error-msg-box">{error}</div>}
           </Form>

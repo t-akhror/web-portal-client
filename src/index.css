@@ -1,12 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 /* layout */
-:root {
-  --primary: #1aac83;
-  --error: #e7195a;
 
-}
 body {
-  background: #f1f1f1;
+  background: #e9eaf1;
   margin: 0;
   font-family: "Poppins";
 }
@@ -51,9 +47,7 @@ button:disabled {
 }
 
 .bg-white{
-  background-color: #fff;
-  
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .res-table{
  overflow-x:auto;
@@ -69,4 +63,20 @@ button:disabled {
 .table tbody thead {
   display: table;
   width: 100%;
+}
+.page-not-found{
+  font-size: 72px;
+  font-weight: 900;
+}
+.badge{
+  cursor: pointer;
+}
+.shadow-sm-color {
+  box-shadow: 0 0.125rem 0.25rem #0d6efd!important;
+}
+.form-switch .form-check-input{
+  display: none!important;
+}
+.dropdown-menu{
+  min-width: auto!important;
 }

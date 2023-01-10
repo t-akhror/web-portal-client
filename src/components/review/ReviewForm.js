@@ -6,9 +6,11 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { useReviewContext } from "../../hooks/useReviewsContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { SERVER_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function ReviewForm() {
+  const { navigate } = useNavigate();
   const [title, setTitle] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
@@ -18,22 +20,27 @@ function ReviewForm() {
 
   const { dispatch } = useReviewContext();
   const { user } = useAuthContext();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const review = { title, brand, category, image, description };
     if (!user) {
-      setError("You must be logged in ");
+      setError(t("youMustBeLoggedIn"));
       return;
     }
-    const response = await fetch(SERVER_URL + "/api/reviews", {
-      method: "POST",
-      body: JSON.stringify(review),
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://reviews-3hiw.onrender.com/api/reviews",
+      {
+        method: "POST",
+        body: JSON.stringify(review),
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
@@ -48,19 +55,26 @@ function ReviewForm() {
       console.log("Review added", json);
       dispatch({ type: "CREATE_REVIEW", payload: json });
     }
+
+    navigate("/");
   };
 
   return (
-    <Container className="p-3 bg-dark-subtle">
-      <div className="fs-3 text-center mb-3 ">Create a new review</div>
-      <Form onSubmit={handleSubmit}>
+    <Container>
+      <div className="fs-1 text-center text-primary-emphasis mb-3 ">
+        {t("createANewReview")}
+      </div>
+      <Form
+        onSubmit={handleSubmit}
+        className="my-3 shadow p-3 bg-body shadow-color rounded border border-primary-subtle bg-light-subtle"
+      >
         <Row>
           <Col md={12} lg={6}>
             <Form.Group className="mb-3" controlId="title">
-              <Form.Label>Title</Form.Label>
+              <Form.Label>{t("title")}</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Title"
+                placeholder={t("title")}
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
               />
@@ -68,10 +82,10 @@ function ReviewForm() {
           </Col>
           <Col md={6} lg={3}>
             <Form.Group className="mb-3" controlId="brand">
-              <Form.Label>Brand</Form.Label>
+              <Form.Label>{t("tags")}</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Brand"
+                placeholder={t("tags")}
                 onChange={(e) => setBrand(e.target.value)}
                 value={brand}
               />
@@ -79,10 +93,10 @@ function ReviewForm() {
           </Col>
           <Col md={6} lg={3}>
             <Form.Group className="mb-3" controlId="category">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>{t("category")}</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Category"
+                placeholder={t("category")}
                 onChange={(e) => setCategory(e.target.value)}
                 value={category}
               />
@@ -90,7 +104,7 @@ function ReviewForm() {
           </Col>
         </Row>
         <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Cover Image </Form.Label>
+          <Form.Label>{t("coverImage")}</Form.Label>
           <Form.Control
             type="text"
             onChange={(e) => setImage(e.target.value)}
@@ -98,7 +112,7 @@ function ReviewForm() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Example textarea</Form.Label>
+          <Form.Label>{t("description")}</Form.Label>
           <Form.Control
             as="textarea"
             rows={5}
@@ -106,9 +120,9 @@ function ReviewForm() {
             value={description}
           />
         </Form.Group>
-        <Button className="w-auto" variant="success" type="submit">
+        <Button className="w-auto" variant="outline-primary" type="submit">
           {" "}
-          Create review
+          {t("createReview")}
         </Button>
         {error && <div className="error-msg-box">{error}</div>}
       </Form>
