@@ -13,7 +13,7 @@ import NotFound from "./components/pages/NotFound";
 
 function App() {
   const { user } = useAuthContext();
-
+  localStorage.setItem("lng", "en");
   return (
     <BrowserRouter>
       <Header />
