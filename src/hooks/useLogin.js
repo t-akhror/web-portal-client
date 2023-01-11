@@ -11,7 +11,7 @@ export const useLogin = () => {
     setError(null);
 
     const response = await fetch(
-      "https://reviews-3hiw.onrender.com/api/users/login ",
+      "https://reviews-3hiw.onrender.com/api/users/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -21,7 +21,6 @@ export const useLogin = () => {
         }),
       }
     );
-
     const json = await response.json();
 
     if (!response.ok) {
@@ -34,7 +33,6 @@ export const useLogin = () => {
 
       // update the auth context
       dispatch({ type: "LOGIN", payload: json });
-
       // update loading state
       setIsLoading(false);
     }
