@@ -53,7 +53,7 @@ function Reviews({ review }) {
             </Card.Link>
             <div className="d-flex justify-content-between align-item-center">
               <div className="fst-italic fw-light">
-                {t("author")}: {review.user ? review.user._id : "Alen"}
+                {t("author")}: {review.user ? review.user.firstname : "Alen"}
               </div>
               <div className="d-flex align-item-center">
                 <small className="text-muted me-3 mt-1">

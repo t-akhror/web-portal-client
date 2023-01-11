@@ -14,12 +14,12 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Header = () => {
   const { logout } = useLogout();
-  const { user } = useAuthContext();
+  const { user, user_detail, dispatch } = useAuthContext();
   const { t, i18n } = useTranslation();
   const handleLogout = () => {
     logout();
   };
-
+  console.log(user_detail);
   // theme function
 
   const getTheme = () => {
@@ -30,7 +30,21 @@ const Header = () => {
   useEffect(() => {
     localStorage.setItem("theme", JSON.stringify(theme));
     document.documentElement.setAttribute("data-bs-theme", theme);
-  }, [theme]);
+    const get_user_detail = async (user) => {
+      const response = await fetch(
+        "https://reviews-3hiw.onrender.com/api/users/",
+        {}
+      );
+      const json = await response.json();
+      const current_user = json.filter((item) => item.email === user.email);
+      if (response.ok) {
+        dispatch({ type: "SET_USER_DETAIL", payload: current_user });
+      }
+    };
+    if (user) {
+      get_user_detail(user);
+    }
+  }, [theme, user, dispatch]);
 
   const changeTheme = () => {
     if (theme === "light") {
@@ -88,7 +102,10 @@ const Header = () => {
           {user && (
             <>
               <Nav>
-                <span className="me-2 text-light"> {user.firstname}</span>
+                <span className="me-2 text-light">
+                  {" "}
+                  {user_detail.firstname}
+                </span>
               </Nav>
               <Nav>
                 <Button variant="outline-light" onClick={handleLogout}>
