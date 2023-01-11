@@ -6,15 +6,20 @@ export const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return { user: action.payload };
+    case "SET_USER_DETAIL":
+      return { user_detail: action.payload };
     case "LOGOUT":
-      return { user: null };
+      return { user: null, user_detail: null };
     default:
       return state;
   }
 };
 
 export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, { user: null });
+  const [state, dispatch] = useReducer(authReducer, {
+    user: null,
+    user_detail: null,
+  });
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));

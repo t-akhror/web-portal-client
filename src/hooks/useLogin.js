@@ -28,11 +28,22 @@ export const useLogin = () => {
       setError(json.error);
     }
     if (response.ok) {
+      const response = await fetch(
+        "https://reviews-3hiw.onrender.com/api/users/find",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+          }),
+        }
+      );
+      const user_json = await response.json();
       // save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));
 
       // update the auth context
-      dispatch({ type: "LOGIN", payload: json });
+      dispatch({ type: "LOGIN", payload: user_json });
 
       // update loading state
       setIsLoading(false);

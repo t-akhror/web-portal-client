@@ -88,7 +88,7 @@ const Header = () => {
           {user && (
             <>
               <Nav>
-                <span className="me-2 text-light"> {user.email}</span>
+                <span className="me-2 text-light"> {user.firstname}</span>
               </Nav>
               <Nav>
                 <Button variant="outline-light" onClick={handleLogout}>

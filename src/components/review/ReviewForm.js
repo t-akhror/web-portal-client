@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 function ReviewForm() {
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
@@ -19,13 +19,20 @@ function ReviewForm() {
   const [error, setError] = useState(null);
 
   const { dispatch } = useReviewContext();
-  const { user } = useAuthContext();
+  const { user, user_detail } = useAuthContext();
   const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const review = { title, brand, category, image, description };
+    const review = {
+      title,
+      brand,
+      category,
+      image,
+      description,
+      user: user_detail,
+    };
     if (!user) {
       setError(t("youMustBeLoggedIn"));
       return;
@@ -52,7 +59,7 @@ function ReviewForm() {
       setImage("");
       setDescription("");
       setError(null);
-      console.log("Review added", json);
+      // console.log("Review added", json);
       dispatch({ type: "CREATE_REVIEW", payload: json });
     }
 

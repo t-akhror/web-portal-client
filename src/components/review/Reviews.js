@@ -29,6 +29,7 @@ function Reviews({ review }) {
   //     dispatch({ type: "DELETE_REVIEW", payload: json });
   //   }
   // };
+
   return (
     <Card className="my-3 shadow p-3 bg-body shadow-color rounded border border-primary-subtle bg-light-subtle ">
       <Row>
@@ -51,7 +52,9 @@ function Reviews({ review }) {
               {t("readMore")}
             </Card.Link>
             <div className="d-flex justify-content-between align-item-center">
-              <div className="fst-italic fw-light">{t("author")}: Alen</div>
+              <div className="fst-italic fw-light">
+                {t("author")}: {review.user ? review.user._id : "Alen"}
+              </div>
               <div className="d-flex align-item-center">
                 <small className="text-muted me-3 mt-1">
                   5 <FontAwesomeIcon icon={faCommentDots} />
