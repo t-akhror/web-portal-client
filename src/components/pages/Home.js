@@ -36,18 +36,22 @@ export default function Home() {
           </div>
         </Col>
         <Col md={9}>
-          {reviews &&
-            (filterKey === "all"
-              ? reviews.map((review) => (
-                  <Reviews review={review} key={review._id} />
-                ))
-              : reviews
-                  .filter(
-                    (review) => review.category.toLowerCase() === filterKey
-                  )
-                  .map((review) => (
-                    <Reviews review={review} key={review._id} />
-                  )))}
+          {reviews ? (
+            filterKey === "all" ? (
+              reviews.map((review) => (
+                <Reviews review={review} key={review._id} />
+              ))
+            ) : (
+              reviews
+                .filter((review) => review.category.toLowerCase() === filterKey)
+                .map((review) => <Reviews review={review} key={review._id} />)
+            )
+          ) : (
+            <div className="lds-ripple d-block mx-auto">
+              <div className="border-primary"></div>
+              <div className="border-primary"></div>
+            </div>
+          )}
         </Col>
       </Row>
     </Container>
