@@ -90,7 +90,7 @@ function MyReviews() {
   useEffect(() => {
     const fetchReview = async () => {
       const response = await fetch(
-        "https://reviews-3hiw.onrender.com/api/reviews",
+        "https://reviews-3hiw.onrender.com/api/reviews/",
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -98,7 +98,6 @@ function MyReviews() {
         }
       );
       const json = await response.json();
-      // console.log(json);
       if (response.ok) {
         dispatch({ type: "MY_REVIEW", payload: json });
       }

@@ -29,10 +29,12 @@ export const useLogin = () => {
     }
     if (response.ok) {
       // save the user to local storage
-      localStorage.setItem("user", JSON.stringify(json));
+      const data = { email: json.email, token: json.token };
+      localStorage.setItem("user", JSON.stringify(data));
 
       // update the auth context
       dispatch({ type: "LOGIN", payload: json });
+
       // update loading state
       setIsLoading(false);
     }

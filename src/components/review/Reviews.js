@@ -9,6 +9,7 @@ import Badge from "react-bootstrap/esm/Badge";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 function Reviews({ review }) {
   const [rating, setRating] = useState(1);
@@ -34,7 +35,11 @@ function Reviews({ review }) {
     <Card className="my-3 shadow p-3 bg-body shadow-color rounded border border-primary-subtle bg-light-subtle ">
       <Row>
         <Col md={4} className="">
-          <Card.Img variant="top" src="" />
+          <Card.Img
+            variant="top"
+            src={review.reviewImage && review.reviewImage}
+            alt="..."
+          />
         </Col>
         <Col md={8}>
           <Card.Body>
@@ -48,7 +53,7 @@ function Reviews({ review }) {
               </small>
             </Card.Title>
             <Card.Text>{review.description.slice(0, 250)}</Card.Text>
-            <Card.Link href="#" className="">
+            <Card.Link as={Link} to={"readmore/" + review._id} className="">
               {t("readMore")}
             </Card.Link>
             <div className="d-flex justify-content-between align-item-center">

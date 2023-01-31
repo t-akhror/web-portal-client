@@ -10,6 +10,7 @@ import MyReviews from "./components/review/MyReviews";
 import Home from "./components/pages/Home";
 import ReviewForm from "./components/review/ReviewForm";
 import NotFound from "./components/pages/NotFound";
+import ReviewDetail from "./components/review/ReviewDetail";
 
 function App() {
   const { user } = useAuthContext();
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/newreview"
           element={user ? <ReviewForm /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/readmore/:id"
+          element={user ? <ReviewDetail /> : <Navigate to="/" />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

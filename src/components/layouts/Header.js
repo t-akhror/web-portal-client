@@ -14,12 +14,13 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Header = () => {
   const { logout } = useLogout();
-  const { user, user_detail } = useAuthContext();
+  const { user } = useAuthContext();
   const { t, i18n } = useTranslation();
   const handleLogout = () => {
     logout();
   };
-  console.log(user_detail);
+
+  console.log(user);
   // theme function
 
   const getTheme = () => {
@@ -88,7 +89,10 @@ const Header = () => {
           {user && (
             <>
               <Nav>
-                <span className="me-2 text-light"> {user.email}</span>
+                <span className="me-2 text-light">
+                  {" "}
+                  {user.fname + " " + user.lname}{" "}
+                </span>
               </Nav>
               <Nav>
                 <Button variant="outline-light" onClick={handleLogout}>

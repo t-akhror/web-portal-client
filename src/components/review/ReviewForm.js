@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -14,36 +15,38 @@ function ReviewForm() {
   const [title, setTitle] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState("");
+  const [reviewImage, setReviewImage] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(null);
 
   const { dispatch } = useReviewContext();
-  const { user, user_detail } = useAuthContext();
+  const { user } = useAuthContext();
   const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const review = {
-      title,
-      brand,
-      category,
-      image,
-      description,
-      user: user_detail,
-    };
+    const review = new FormData();
+    review.append("title", title);
+    review.append("brand", brand);
+    review.append("category", category);
+    review.append("reviewImage", reviewImage);
+    review.append("description", description);
+    review.append("user", user.user_id);
+
     if (!user) {
       setError(t("youMustBeLoggedIn"));
       return;
     }
+    // for (let [key, value] of review.entries()) {
+    //   console.log(key, value);
+    // }
     const response = await fetch(
-      "https://reviews-3hiw.onrender.com/api/reviews",
+      "https://reviews-3hiw.onrender.com/api/reviews/",
       {
         method: "POST",
-        body: JSON.stringify(review),
+        body: review,
         headers: {
-          "Content-type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       }
@@ -51,12 +54,14 @@ function ReviewForm() {
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
+      console.log("response did not send");
     }
     if (response.ok) {
+      console.log("data sent to server" + review);
       setTitle("");
       setBrand("");
       setCategory("");
-      setImage("");
+      setReviewImage("");
       setDescription("");
       setError(null);
       // console.log("Review added", json);
@@ -65,7 +70,6 @@ function ReviewForm() {
 
     navigate("/");
   };
-
   return (
     <Container>
       <div className="fs-1 text-center text-primary-emphasis mb-3 ">
@@ -73,6 +77,7 @@ function ReviewForm() {
       </div>
       <Form
         onSubmit={handleSubmit}
+        encType="multipart/form-data"
         className="my-3 shadow p-3 bg-body shadow-color rounded border border-primary-subtle bg-light-subtle"
       >
         <Row>
@@ -113,9 +118,9 @@ function ReviewForm() {
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>{t("coverImage")}</Form.Label>
           <Form.Control
-            type="text"
-            onChange={(e) => setImage(e.target.value)}
-            value={image}
+            type="file"
+            filename="reviewImage"
+            onChange={(e) => setReviewImage(e.target.files[0])}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
